@@ -1,0 +1,21 @@
+# history
+.history/
+
+# OS specific
+.DS_Store
+
+# Editor directories and files
+.vscode/
+.idea/
+.cursor/
+.roocode/
+.kilocode/
+testdata/
+*.tar
+
+# Test coverage
+coverage.txt
+coverage.out
+*.log
+
+/dist
