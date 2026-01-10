@@ -15,12 +15,7 @@ def count_chinese_chars(filepath):
                 count += 1
     return count
 
-if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: python3 check_length.py <filename>")
-        sys.exit(1)
-    
-    filepath = sys.argv[1]
+def process_file(filepath):
     count = count_chinese_chars(filepath)
     print(f"File: {os.path.basename(filepath)}")
     print(f"Chinese Character Count: {count}")
@@ -31,3 +26,27 @@ if __name__ == "__main__":
         print("WARNING: Word count is significantly above 2500!")
     else:
         print("SUCCESS: Word count is within acceptable range (2300-2700).")
+    print("-" * 30)
+
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("Usage: python3 check_length.py <filename_or_directory>")
+        sys.exit(1)
+    
+    path = sys.argv[1]
+    
+    if os.path.isdir(path):
+        # Walk through directory and process all .txt files
+        files_found = False
+        for root, _, files in os.walk(path):
+            # Sort files to ensure order (e.g. by chapter number)
+            for file in sorted(files):
+                if file.endswith(".txt"):
+                    files_found = True
+                    process_file(os.path.join(root, file))
+        
+        if not files_found:
+             print(f"No .txt files found in directory: {path}")
+             
+    else:
+        process_file(path)
